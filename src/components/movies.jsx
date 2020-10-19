@@ -1,17 +1,34 @@
 import React, { Component } from "react";
 import { getMovies } from "../services/fakeMovieService";
+import Like from "./common/like";
+import Pagination from "./common/pagination";
 
 class Movies extends Component {
   state = {
     movies: getMovies(),
+    currentPage: 1,
+    moviesPerPage: 8,
   };
 
   handleDelete = (movie) => {
     const movies = this.state.movies.filter((m) => movie._id !== m._id);
     this.setState({ movies });
   };
+
+  handleLikeClick = (movie) => {
+    const movies = [...this.state.movies];
+    const idx = movies.indexOf(movie);
+    movies[idx] = { ...movie };
+    movies[idx].liked = !movies[idx].liked;
+    this.setState({ movies });
+  };
+
+  handlePageChange = (pageNumber) => {
+    this.setState({ currentPage: pageNumber });
+  };
   render() {
     const { length: moviesCount } = this.state.movies;
+    const { currentPage, moviesPerPage } = this.state;
     if (moviesCount <= 0) {
       return <p>There are no movies in the database!</p>;
     }
@@ -26,6 +43,7 @@ class Movies extends Component {
               <th>Stock</th>
               <th>Rate</th>
               <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -35,6 +53,12 @@ class Movies extends Component {
                 <td>{movie.title}</td>
                 <td>{movie.numberInStock}</td>
                 <td>{movie.dailyRentalRate}</td>
+                <td>
+                  <Like
+                    liked={movie.liked}
+                    onClick={() => this.handleLikeClick(movie)}
+                  />
+                </td>
                 <td>
                   <button
                     onClick={() => this.handleDelete(movie)}
@@ -53,6 +77,12 @@ class Movies extends Component {
             </tr>
           </tbody>
         </table>
+        <Pagination
+          itemCount={moviesCount}
+          itemPageLimit={moviesPerPage}
+          currentPage={currentPage}
+          onPageChange={this.handlePageChange}
+        />
       </>
     );
   }
