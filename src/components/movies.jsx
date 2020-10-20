@@ -3,7 +3,7 @@ import { getMovies } from "../services/fakeMovieService";
 import { getGenres } from "../services/fakeGenreService";
 import { paginateMovies } from "../utils/paginate";
 import ListGroup from "./common/listGroup";
-import Like from "./common/like";
+import MoviesTable from "./moviesTable";
 import Pagination from "./common/pagination";
 
 class Movies extends Component {
@@ -73,48 +73,11 @@ class Movies extends Component {
         </div>
         <div className="col">
           <p>Showing {filteredMovies.length} movies in the database</p>
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Title</th>
-                <th>Genre</th>
-                <th>Stock</th>
-                <th>Rate</th>
-                <th></th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {displayedMovies.map((movie) => (
-                <tr key={movie._id}>
-                  <td>{movie.genre.name}</td>
-                  <td>{movie.title}</td>
-                  <td>{movie.numberInStock}</td>
-                  <td>{movie.dailyRentalRate}</td>
-                  <td>
-                    <Like
-                      liked={movie.liked}
-                      onClick={() => this.handleLikeClick(movie)}
-                    />
-                  </td>
-                  <td>
-                    <button
-                      onClick={() => this.handleDelete(movie)}
-                      className="btn btn-danger btn-sm"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
+          <MoviesTable
+            displayedMovies={displayedMovies}
+            onLike={this.handleLikeClick}
+            onDelete={this.handleDelete}
+          />
           <Pagination
             itemCount={filteredMovies.length}
             itemPageLimit={itemPageLimit}
