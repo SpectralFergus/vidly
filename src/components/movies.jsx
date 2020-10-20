@@ -33,7 +33,11 @@ class Movies extends Component {
     if (moviesCount <= 0) {
       return <p>There are no movies in the database!</p>;
     }
-    const movies = paginateMovies(allMovies, currentPage, itemPageLimit);
+    const displayedMovies = paginateMovies(
+      allMovies,
+      currentPage,
+      itemPageLimit
+    );
     return (
       <>
         <p>Showing {moviesCount} movies in the database</p>
@@ -49,7 +53,7 @@ class Movies extends Component {
             </tr>
           </thead>
           <tbody>
-            {movies.map((movie) => (
+            {displayedMovies.map((movie) => (
               <tr key={movie._id}>
                 <td>{movie.genre.name}</td>
                 <td>{movie.title}</td>
