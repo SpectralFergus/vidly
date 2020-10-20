@@ -9,7 +9,7 @@ const Pagination = (props) => {
 
   return (
     pageCount > 1 && (
-      <nav aria-label="Movie Results Pages" style={{ cursor: "pointergit" }}>
+      <nav aria-label="Movie Results Pages" style={{ cursor: "pointer" }}>
         <ul className="pagination">
           <li className="page-item">
             <a className="page-link">Previous</a>

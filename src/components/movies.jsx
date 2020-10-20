@@ -15,7 +15,8 @@ class Movies extends Component {
   };
 
   componentDidMount() {
-    this.setState({ movies: getMovies(), genres: getGenres() });
+    const genres = [{ _id: "", name: "All Genres" }, ...getGenres()];
+    this.setState({ movies: getMovies(), genres });
   }
 
   handleDelete = (movie) => {
@@ -36,29 +37,42 @@ class Movies extends Component {
   };
 
   handleGenreSelected = (genre) => {
-    console.log("genre selected:", genre);
+    this.setState({ selectedGenre: genre, currentPage: 1 });
   };
   render() {
     const { length: moviesCount } = this.state.movies;
-    const { currentPage, itemPageLimit, movies: allMovies } = this.state;
+    const {
+      currentPage,
+      itemPageLimit,
+      selectedGenre,
+      movies: allMovies,
+    } = this.state;
     if (moviesCount <= 0) {
       return <p>There are no movies in the database!</p>;
     }
+
+    const filteredMovies =
+      selectedGenre && selectedGenre._id
+        ? allMovies.filter((movie) => movie.genre._id === selectedGenre._id)
+        : allMovies;
+
     const displayedMovies = paginateMovies(
-      allMovies,
+      filteredMovies,
       currentPage,
       itemPageLimit
     );
+
     return (
       <div className="row">
         <div className="col-3">
           <ListGroup
             items={this.state.genres}
+            selectedItem={this.state.currentGenre}
             onItemSelected={this.handleGenreSelected}
           />
         </div>
         <div className="col">
-          <p>Showing {moviesCount} movies in the database</p>
+          <p>Showing {filteredMovies.length} movies in the database</p>
           <table className="table">
             <thead>
               <tr>
@@ -102,7 +116,7 @@ class Movies extends Component {
             </tbody>
           </table>
           <Pagination
-            itemCount={moviesCount}
+            itemCount={filteredMovies.length}
             itemPageLimit={itemPageLimit}
             currentPage={currentPage}
             onPageChange={this.handlePageChange}
