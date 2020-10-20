@@ -39,6 +39,10 @@ class Movies extends Component {
   handleGenreSelected = (genre) => {
     this.setState({ selectedGenre: genre, currentPage: 1 });
   };
+
+  handleSort = (criteria) => {
+    console.log(criteria);
+  };
   render() {
     const { length: moviesCount } = this.state.movies;
     const {
@@ -67,7 +71,7 @@ class Movies extends Component {
         <div className="col-3">
           <ListGroup
             items={this.state.genres}
-            selectedItem={this.state.currentGenre}
+            selectedItem={this.state.selectedGenre}
             onItemSelected={this.handleGenreSelected}
           />
         </div>
@@ -77,6 +81,7 @@ class Movies extends Component {
             displayedMovies={displayedMovies}
             onLike={this.handleLikeClick}
             onDelete={this.handleDelete}
+            onSort={this.handleSort}
           />
           <Pagination
             itemCount={filteredMovies.length}
