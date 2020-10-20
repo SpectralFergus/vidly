@@ -18,8 +18,8 @@ const MoviesTable = (props) => {
       <tbody>
         {displayedMovies.map((movie) => (
           <tr key={movie._id}>
-            <td>{movie.genre.name}</td>
             <td>{movie.title}</td>
+            <td>{movie.genre.name}</td>
             <td>{movie.numberInStock}</td>
             <td>{movie.dailyRentalRate}</td>
             <td>
