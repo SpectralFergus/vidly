@@ -13,8 +13,8 @@ const Pagination = ({
 
   return (
     pageCount > 1 && (
-      <nav aria-label="Movie Results Pages" style={{ cursor: "pointer" }}>
-        <ul className="pagination">
+      <nav aria-label="Movie Results Pages">
+        <ul className="clickable pagination">
           <li className="page-item">
             <button className="page-link">Previous</button>
           </li>

@@ -7,7 +7,7 @@ const ListGroup = ({
   selectedItem,
 }) => {
   return (
-    <ul className="list-group" style={{ cursor: "pointer" }}>
+    <ul className="clickable list-group">
       {items.map((item) => (
         <li
           onClick={() => onItemSelected(item)}
