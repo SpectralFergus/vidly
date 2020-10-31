@@ -65,10 +65,10 @@ class Form extends Component {
       <Input
         type={type}
         name={name}
-        value={data["name"]}
+        value={data[name]}
         label={label}
         onChange={this.handleChange}
-        error={errors["name"]}
+        error={errors[name]}
       />
     );
   }
